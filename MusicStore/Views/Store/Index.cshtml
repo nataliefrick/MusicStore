@@ -1,0 +1,116 @@
+﻿@*@model IEnumerable<MusicStore.Models.Album>*@
+@model AlbumViewModel
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_StoreLayout";
+
+    // Get the genres in the list of albums
+    //List<string> genres = new List<string>(); 
+    //HashSet<string> genresEncountered = new HashSet<string>();
+
+    //foreach (var item in Model)
+    //{
+    //    if (genresEncountered.Contains(item.Genre.Name))
+    //    {
+    //        continue;
+    //    }
+    //    genres.Add(item.Genre.Name);
+    //    genresEncountered.Add(item.Genre.Name);
+
+    //}
+
+
+    //<p><a asp-action="Create">Create New</a></p>
+
+}
+
+
+
+<h1 class="mt-5">Albums</h1>
+
+<div class="card bg-light mb-3 p-3">
+    <form class="row row-cols-lg-auto g-3 align-items-center justify-content-center">
+
+        @*// filter for Searchstring*@
+        <div class="col-12">
+            <label class="visually-hidden" for="searchFunction">Search</label>
+            <div class="input-group">
+                <input type="text" class="form-control" value="@ViewData["CurrentFilter"]" id="searchString" name="searchString" placeholder="Search">
+            </div>
+        </div>
+
+        @*// filter for Genre*@
+        <div class="col-12">
+            <label class="visually-hidden" for="FilterGenre">Genre</label> 
+                <select class="form-select" id="FilterGenre" name="FilterGenre">
+                    <option name="FilterGenre" value="">Choose a genre...</option>
+                    @foreach (var genre in Model.Genres)
+                    {
+                    <option selected="@(Model.FilteredGenre==genre.Name)" name="FilterGenre" value=@genre.Name>@genre.Name</option>
+                    }
+            </select>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+
+        @*// clear search*@
+        <div class="col-12">
+            <a class="btn-primary btn" asp-action="Index">Clear Search</a>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+
+
+
+<div class="w-100 d-flex flex-wrap justify-content-center">
+
+    @{
+        //get random image from lorem picsum, starting at id=10
+        int x = 9;
+        string image;
+        string imageString1 = "https://picsum.photos/id/";
+        string imageString2 = "/200";
+    }
+
+    @if (Model.Albums.Count() > 0)
+    {
+        foreach (var album in Model.Albums)
+        {
+            x++;
+            image = imageString1 + x + imageString2;
+
+            <div class="card m-3" style="width: 14rem;">
+                @if (string.IsNullOrEmpty(album.AlbumArtUrl))
+                {
+                    <img src="img/placeholder.jpg" class="card-img-top" alt="Album Title @album.Title by @album.Artist.Name">
+                }
+                else
+                {
+                    <img src=@image class="card-img-top" alt="Album Title @album.Title by @album.Artist.Name">
+                    @*<img src="@album.AlbumArtUrl" class="card-img-top" alt="Album Title @album.Title by @album.Artist.Name">*@
+                }
+              <div class="card-body">
+                    <h5 class="card-title">@album.Title</h5>
+                    <p class="card-text"><span class="text-muted small"><em>@album.Artist.Name</em></span><br> Genre: @album.Genre.Name<br> Price: @album.Price</p>
+                    <a href="#" class="btn btn-primary">Add to Cart</a> <a class="btn btn-info" asp-action="Details" asp-route-id="@album.AlbumId">Details</a>
+              </div>
+            </div>
+        }
+    }
+    else {
+        <p class="mt-5 text-warning">Sorry, no albums matched the search/filter terms.</p>
+    }
+    
+</div>
+
+
+
