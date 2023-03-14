@@ -9,11 +9,11 @@ using MusicStore.Data;
 
 #nullable disable
 
-namespace MusicStore.Data.Migrations
+namespace MusicStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230313111554_create")]
-    partial class create
+    [Migration("20230314034255_CreateProject")]
+    partial class CreateProject
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
