@@ -7,6 +7,28 @@ namespace MusicStore.Models
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
+            using (var context = new ApplicationDbContext(
+                serviceProvider.GetRequiredService<
+                    DbContextOptions<ApplicationDbContext>>()))
+            {
+
+                if (context.OrderStatus.Any())
+                {
+                    return;   // DB has been seeded
+                }
+
+                context.OrderStatus.AddRange(
+
+                    new OrdStat { StatusId = 1, StatusName = "Pending" },
+                    new OrdStat { StatusId = 2, StatusName = "Shipped" },
+                    new OrdStat { StatusId = 3, StatusName = "Delivered" },
+                    new OrdStat { StatusId = 4, StatusName = "Cancelled" },
+                    new OrdStat { StatusId = 5, StatusName = "Returned" },
+                    new OrdStat { StatusId = 6, StatusName = "Refunded" });
+
+
+                context.SaveChanges();
+            }
 
             using (var context = new ApplicationDbContext(
                 serviceProvider.GetRequiredService<

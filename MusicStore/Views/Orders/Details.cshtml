@@ -1,0 +1,74 @@
+﻿@model IEnumerable<OrderDetail>
+
+@{
+    ViewData["Title"] = "Order Summary";
+    Layout = "_StoreLayout";
+    
+    bool first = true;
+}
+
+<h1 class="dont-show">Order Summary</h1>
+<h3>Thank you for your order!</h3>
+ 
+@if (Model != null)
+{
+    
+    <div style="width:90%;margin:auto" class="mt-2">
+        @foreach(var order in Model)
+        {
+            if(first) {
+                <h5>Order #@order.OrderId</h5>
+                <p>Order Date: @order.Order.Created.ToString("dd-MM-yyyy")</p>
+                first = false;
+            }
+        }
+    </div>
+
+    <div style="width:90%;margin:auto" class="mt-2"><table class="table table-striped">
+            <tr>
+                <th>Album</th>
+                <th>Image</th>
+                <th class="text-end">Price</th>
+                <th class="text-centerd">Qty</th>
+                <th class="text-end">Total Price</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Album.Title</td>
+                    <td>
+                        @if (string.IsNullOrEmpty(item.Album.AlbumArtUrl))
+                        {
+                            <img src="/images/NoImage.png" style="width:80px;height:80px" />
+                        }
+                        else
+                        {
+                            <img src="@item.Album.AlbumArtUrl" style="width:80px;height:80px" />
+                        }
+                    </td>
+                    <td class="text-end">@item.Album.Price</td>
+                    <td class="text-center">@item.Quantity</td>
+                    <td class="text-end">@(item.UnitPrice * item.Quantity)</td>
+                    <td>
+                        <a class="btn btn-info" href="/Cart/AddItem?albumId=@item.AlbumId&&redirect=1">+</a>
+                        <a class="btn btn-info" href="/Cart/RemoveItem?albumid=@item.AlbumId">-</a>
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <div class="my-2">
+            <h5>Order Total: @(Model.Select(item => item.Album.Price * item.Quantity).Sum()) kr</h5>
+        </div></div>
+
+         
+    }
+
+    else
+    {
+        <h5>Order has no items.</h5>
+    }
+       
+    
+   

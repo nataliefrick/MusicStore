@@ -1,35 +1,21 @@
-﻿@*@model IEnumerable<MusicStore.Models.Album>*@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@*@model IEnumerable<MusicStore.Models.Album>*@
 @model AlbumViewModel
 
 
 @{
     ViewData["Title"] = "Index";
     Layout = "_StoreLayout";
-
-    // Get the genres in the list of albums
-    //List<string> genres = new List<string>(); 
-    //HashSet<string> genresEncountered = new HashSet<string>();
-
-    //foreach (var item in Model)
-    //{
-    //    if (genresEncountered.Contains(item.Genre.Name))
-    //    {
-    //        continue;
-    //    }
-    //    genres.Add(item.Genre.Name);
-    //    genresEncountered.Add(item.Genre.Name);
-
-    //}
-
-
-    //<p><a asp-action="Create">Create New</a></p>
-
 }
 
 
 
 <h1 class="mt-5">Albums</h1>
 
+
+@*// Filter and search section*@
 <div class="card bg-light mb-3 p-3">
     <form class="row row-cols-lg-auto g-3 align-items-center justify-content-center">
 
@@ -70,7 +56,7 @@
 
 
 
-
+@* // Album List section*@
 <div class="w-100 d-flex flex-wrap justify-content-center">
 
     @{
@@ -91,7 +77,7 @@
             <div class="card m-3" style="width: 14rem;">
                 @if (string.IsNullOrEmpty(album.AlbumArtUrl))
                 {
-                    <img src="img/placeholder.jpg" class="card-img-top" alt="Album Title @album.Title by @album.Artist.Name">
+                    <img src="/img/placeholder.jpg" class="card-img-top" alt="Album Title @album.Title by @album.Artist.Name">
                 }
                 else
                 {
@@ -101,7 +87,11 @@
               <div class="card-body">
                     <h5 class="card-title">@album.Title</h5>
                     <p class="card-text"><span class="text-muted small"><em>@album.Artist.Name</em></span><br> Genre: @album.Genre.Name<br> Price: @album.Price</p>
-                    <a href="#" class="btn btn-primary">Add to Cart</a> <a class="btn btn-info" asp-action="Details" asp-route-id="@album.AlbumId">Details</a>
+
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                    <button type="button" class="btn btn-primary" onclick="add(@album.AlbumId)">Add to Cart</button> <a class="btn btn-info" asp-action="Details" asp-route-id="@album.AlbumId">Details</a>
+                    }
               </div>
             </div>
         }
@@ -111,6 +101,30 @@
     }
     
 </div>
+
+@section Scripts {
+    <script>
+
+        async function add(albumId) {
+
+            try{
+                var response = await fetch(`/Cart/AddItem?albumId=${albumId}`); 
+                if(response.status==200){
+                    var result = await response.json(); //returns the nr of items in the cart
+
+                    //print out nr items in cart on screen by cart icon
+                    var cartCountEl = document.getElementById("cartCount");
+                    cartCountEl.innerHTML = result;
+                    alert("Item added to cart");
+                }
+            }
+            catch(err){
+                console.log(err);
+            }
+            
+        }
+    </script>
+}
 
 
 

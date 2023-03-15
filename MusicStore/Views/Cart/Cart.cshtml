@@ -1,0 +1,66 @@
+﻿@model Cart
+
+@{
+    ViewData["Title"] = "Your Cart";
+    Layout = "_StoreLayout";
+}
+
+<h1 class="dont-show">Cart</h1>
+
+<div style="width:90%;margin:auto" class="mt-2">
+    @if (Model != null)
+    {
+
+        <h5>Cart</h5>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Album</th>
+                <th>Image</th>
+                <th class="text-end">Price</th>
+                <th class="text-centerd">Qty</th>
+                <th class="text-end">Total Price</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var item in Model.CartDetails)
+            {
+                <tr>
+                    <td>
+                        @item.Album.Title
+                    </td>
+                    <td>
+                        @if (string.IsNullOrEmpty(item.Album.AlbumArtUrl))
+                        {
+                            <img src="/images/NoImage.png" style="width:80px;height:80px" />
+                        }
+                        else
+                        {
+                            <img src="@item.Album.AlbumArtUrl" style="width:80px;height:80px" />
+                        }
+                    </td>
+                    <td class="text-end">@item.Album.Price</td>
+                    <td class="text-center">@item.Quantity</td>
+                    <td class="text-end">@(item.Album.Price * item.Quantity)</td>
+                    <td>
+                        <a class="btn btn-info" href="/Cart/AddItem?albumId=@item.AlbumId&&redirect=1">+</a>
+                        <a class="btn btn-info" href="/Cart/RemoveItem?albumid=@item.AlbumId">-</a>
+                    </td>
+                </tr>
+            }
+        </table>
+
+
+        <div class="my-2">
+            <h5>Cart Total: @(Model.CartDetails.Select(item => item.Album.Price * item.Quantity).Sum()) kr</h5>
+        </div>
+
+        <div class="my-3">
+            <a class="btn btn-primary" href="/Cart/Checkout">Checkout</a>
+        </div>
+
+    }
+    else
+    {
+        <h5>Your cart is empty</h5>
+    }
+</div>

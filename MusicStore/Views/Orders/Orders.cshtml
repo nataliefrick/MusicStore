@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Order Details";
+    Layout = "_StoreLayout";
+}
+
+<div style="width:90%;margin:auto" class="mt-2">
+    <h5>Your Orders</h5>
+    @if (Model != null && Model.Count()>0)
+    {
+
+        <table class="table table-striped">
+            <tr>
+                <th>Date</th>
+                <th class="text-center">Order Number</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.Created.ToString("dd-MM-yyyy HH:mm")</td>
+                    <td class="text-center">@item.OrderId</td>
+                    <td>@item.OrdStat.StatusName</td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.OrderId">Order Summary</a>
+                    </td>
+                </tr>
+            }
+
+
+            @*from Areas/Identity/Pages/Account/Manage/ManageNav.cshtml add a link to with hardcorded link href="/Orders/Orders" *@
+
+        </table>
+
+
+    }
+    else
+    {
+        <h5>No order available</h5>
+    }
+</div>
+

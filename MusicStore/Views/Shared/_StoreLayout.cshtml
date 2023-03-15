@@ -1,4 +1,7 @@
-﻿@model AlbumViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model AlbumViewModel
 @*@model IEnumerable<MusicStore.Models.Genre> //IEnumerable means the view will be expecting several Genre objects rather than just one
 
 This tells the Razor view engine that it will be working with a model object that can hold several Genre objects. We're using an IEnumerable<Genre> rather than a List<Genre> since it's more generic, allowing us to change our model type later to any object type that supports the IEnumerable interface.*@
@@ -30,6 +33,12 @@ This tells the Razor view engine that it will be working with a model object tha
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Store" asp-action="Index">Store</a>
                         </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Cart">Cart</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -89,6 +98,27 @@ This tells the Razor view engine that it will be working with a model object tha
     @await RenderSectionAsync("Scripts", required: false)
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+
+    <script>
+        loadCartCount();
+
+        async function loadCartCount() {
+
+            try {
+                var response = await fetch(`/Cart/GetCartCount`);
+                if (response.status == 200) {
+                    var result = await response.json(); //returns the nr of items in the cart
+                    var cartCountEl = document.getElementById("cartCount");
+                    cartCountEl.innerHTML = result;
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
+
+        }
+    </script>
 
 </body>
 </html>

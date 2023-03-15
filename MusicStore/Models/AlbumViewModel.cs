@@ -1,4 +1,5 @@
-﻿namespace MusicStore.Models
+﻿
+namespace MusicStore.Models
 {
     public class AlbumViewModel
     {

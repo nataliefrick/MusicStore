@@ -24,3 +24,22 @@ body {
 #btn-sm {
     line-height: 8px!important;
 }
+
+
+.dont-show {
+    display: none;
+}
+
+.text-end {
+    text-align: right;
+    padding-right: 2em!important;
+}
+
+td.text-end {
+    text-align: right;
+    padding-right: 2em;
+}
+
+.width-auto {
+    width: auto!important;
+}
