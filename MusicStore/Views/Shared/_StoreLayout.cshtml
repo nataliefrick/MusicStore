@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-@model AlbumViewModel
+
 @*@model IEnumerable<MusicStore.Models.Genre> //IEnumerable means the view will be expecting several Genre objects rather than just one
 
 This tells the Razor view engine that it will be working with a model object that can hold several Genre objects. We're using an IEnumerable<Genre> rather than a List<Genre> since it's more generic, allowing us to change our model type later to any object type that supports the IEnumerable interface.*@
@@ -38,6 +38,17 @@ This tells the Razor view engine that it will be working with a model object tha
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Cart">Cart</a>
                             </li>
+                            @*@if (SignInManager.IsSignedIn(User))
+                            {*@
+
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Albums" asp-action="Index">Albums</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
+                                </li>
+
+                            @*}*@
                         }
                     </ul>
                     <partial name="_LoginPartial" />
@@ -51,18 +62,17 @@ This tells the Razor view engine that it will be working with a model object tha
             <h3 class="mt-5">Browse</h3>
 
                 <div class="btn-group-vertical">
+                    
 
-
-                    @foreach (var genre in Model.Genres)
-                {
+                    @foreach(var genre in ViewBag.genre) {
+                   
                     @*<li><a href="/Store/Browse?genre=@genre.Name">@genre.Name</a></li> // hardcoding a link*@
                     @*dynamic link @Html.ActionLink(Link text, Controller action name, Route parameter values)
                             @Html.ActionLink("Link Text", "ActionName", new { controller = "MyController", id = 1 }, new { @class = "my-class" })
                     *@
                         @*StoreManager?searchString=&FilterGenre=Rock*@
-                        <button type="button" class="btn btn-primary">@Html.ActionLink((string) genre.Name.ToString(), "Index", new { FilterGenre = genre.Name }, new { @class = "btn btn-primary" }) </button>
-
-                }
+                    <button type="button" class="btn btn-primary">@Html.ActionLink((string) genre.Name.ToString(), "Index", new { FilterGenre = genre.Name }, new { @class = "btn btn-primary" }) </button>
+                    }
             </div>
 
 

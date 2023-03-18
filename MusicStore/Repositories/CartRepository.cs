@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using MusicStore.Data;
 using MusicStore.Models;
+using System.Diagnostics;
 #nullable disable
 namespace MusicStore.Repositories
 {
@@ -176,14 +177,16 @@ namespace MusicStore.Repositories
         public async Task<bool> Checkout()
         {
             using var transaction = _context.Database.BeginTransaction();
-            try 
-            {
-                // move data from cartDetail to Order and OrderDetail then remove CartDetail
+            //try 
+            //{   // move data from cartDetail to Order and OrderDetail then remove CartDetail
+             
+                
                 var userId = GetUserId();
 
                 // if UserId is not found
                 if (string.IsNullOrEmpty(userId))
                     throw new Exception("Not logged in");
+                
 
                 var cart = await GetCart(userId);
                 if (cart is null)
@@ -220,12 +223,11 @@ namespace MusicStore.Repositories
                 _context.SaveChanges();
                 transaction.Commit();
                 return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
+            //}
+            //catch (Exception)
+            //{
+            //   return false;
+            //}
         }
         
     }

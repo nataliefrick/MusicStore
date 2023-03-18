@@ -45,6 +45,7 @@ namespace MusicStore.Controllers
         public async Task<IActionResult> Checkout()
         {
             bool isCheckedOut = await _context.Checkout();
+            
             if (!isCheckedOut) throw new Exception("Something went wrong with the server. Please try again.");
             return RedirectToAction("Orders", "Orders");
             

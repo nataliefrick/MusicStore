@@ -67,11 +67,9 @@ namespace MusicStore.Controllers
                 FilteredGenre = FilterGenre
             };
 
-            //return View(await searchResult.ToListAsync());
+            ViewBag.genre = _context.Genres;
             return View(albumModel);
 
-
-            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: StoreManager/Details/5
