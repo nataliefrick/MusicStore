@@ -39,11 +39,11 @@
                     <td>
                         @if (string.IsNullOrEmpty(item.Album.AlbumArtUrl))
                         {
-                            <img src="/images/NoImage.png" style="width:80px;height:80px" />
+                            <img src="/images/NoImage.png" class="cart-order" />
                         }
                         else
                         {
-                            <img src="@item.Album.AlbumArtUrl" style="width:80px;height:80px" />
+                            <img src="@item.Album.AlbumArtUrl" class="cart-order" />
                         }
                     </td>
                     <td class="text-end">@item.Album.Price</td>

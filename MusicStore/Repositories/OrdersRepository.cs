@@ -30,7 +30,7 @@ namespace MusicStore.Repositories
             return userId;
         }
 
-        // Get user orders
+        // Get All orders for specific userID
         public async Task<IEnumerable<Order>> GetOrders()
         {
             var userId = GetUserId();
@@ -45,11 +45,10 @@ namespace MusicStore.Repositories
                 .Where(a => a.UserId==userId)
                 .ToListAsync();
 
-
             return orders;
         }
 
-        // GET: Albums/Details/5
+        // GET: Order Details for specific orderID
         public async Task<IEnumerable<OrderDetail>> GetOrderDetails(int? id)
         {
 

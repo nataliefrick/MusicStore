@@ -1,8 +1,24 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p> To your online music store.</p>
+    <a class="btn-primary btn" asp-controller="Store" asp-action="Index">Enter</a>
+</div>
+
+<div class="w-100 d-flex flex-wrap justify-content-center">
+    
+    @for (int x=10; x<=21; x++)
+    {
+        //get random image from lorem picsum, starting at id=10
+        string image = "https://picsum.photos/id/" + x + "/200";
+        
+
+        <div class="card m-3" style="width: 14rem;">
+            <img src=@image class="card-img" alt="Your Music Store online">
+        </div>
+    }
 </div>

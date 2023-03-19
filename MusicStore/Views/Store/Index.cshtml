@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using System.Net;
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @*@model IEnumerable<MusicStore.Models.Album>*@
@@ -8,6 +9,8 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "_StoreLayout";
+
+    
 }
 
 
@@ -21,9 +24,9 @@
 
         @*// filter for Searchstring*@
         <div class="col-12">
-            <label class="visually-hidden" for="searchFunction">Search</label>
+            @*<label class="visually-hidden" for="searchFunction">Search</label>*@
             <div class="input-group">
-                <input type="text" class="form-control" value="@ViewData["CurrentFilter"]" id="searchString" name="searchString" placeholder="Search">
+                <input type="text" class="form-control" value="@ViewData["CurrentFilter"]" id="searchString" name="searchString" placeholder="Enter a Search Term">
             </div>
         </div>
 
@@ -31,10 +34,10 @@
         <div class="col-12">
             <label class="visually-hidden" for="FilterGenre">Genre</label> 
                 <select class="form-select" id="FilterGenre" name="FilterGenre">
-                    <option name="FilterGenre" value="">Choose a genre...</option>
+                    <option value="">Choose a genre...</option>
                     @foreach (var genre in Model.Genres)
                     {
-                    <option selected="@(Model.FilteredGenre==genre.Name)" name="FilterGenre" value=@genre.Name>@genre.Name</option>
+                    <option selected="@(Model.FilteredGenre==genre.Name)" value=@genre.Name>@genre.Name</option>
                     }
             </select>
         </div>
@@ -81,8 +84,8 @@
                 }
                 else
                 {
-                    <img src=@image class="card-img-top" alt="Album Title @album.Title by @album.Artist.Name">
-                    @*<img src="@album.AlbumArtUrl" class="card-img-top" alt="Album Title @album.Title by @album.Artist.Name">*@
+                    <img src=@image class="card-img-top" alt="Album Title @album.Title by @album.Artist.Name"> 
+                    @*<img src="@album.AlbumArtUrl" class="card-img-top" alt="Album Title @album.Title by @album.Artist.Name"> *@
                 }
               <div class="card-body">
                     <h5 class="card-title">@album.Title</h5>
@@ -125,6 +128,3 @@
         }
     </script>
 }
-
-
-

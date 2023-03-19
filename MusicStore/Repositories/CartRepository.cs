@@ -89,9 +89,9 @@ namespace MusicStore.Repositories
                 _context.SaveChanges();
                 transaction.Commit();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                
+                throw new Exception("Something went wrong");
             }
             var nrItemsFound = await GetCartItemCount(userId);
             return nrItemsFound;
@@ -107,7 +107,7 @@ namespace MusicStore.Repositories
             {
                 // if UserId is not found
                 if (string.IsNullOrEmpty(userId))
-                    throw new Exception("Not logged in");
+                    throw new Exception("The user is not logged in");
 
                 // find cart of UserId
                 var cart = await GetCart(userId);
@@ -131,9 +131,9 @@ namespace MusicStore.Repositories
                 transaction.Commit();
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                
+                throw new Exception("Something went wrong with the server");
             }
             var nrItemsFound = await GetCartItemCount(userId);
             return nrItemsFound;
@@ -177,10 +177,8 @@ namespace MusicStore.Repositories
         public async Task<bool> Checkout()
         {
             using var transaction = _context.Database.BeginTransaction();
-            //try 
-            //{   // move data from cartDetail to Order and OrderDetail then remove CartDetail
-             
-                
+            
+            // move data from cartDetail to Order and OrderDetail then remove CartDetail
                 var userId = GetUserId();
 
                 // if UserId is not found
@@ -223,11 +221,7 @@ namespace MusicStore.Repositories
                 _context.SaveChanges();
                 transaction.Commit();
                 return true;
-            //}
-            //catch (Exception)
-            //{
-            //   return false;
-            //}
+
         }
         
     }

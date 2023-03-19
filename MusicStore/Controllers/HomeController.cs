@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MusicStore.Data;
 using MusicStore.Models;
 using System.Diagnostics;
 

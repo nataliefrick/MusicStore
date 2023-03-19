@@ -9,8 +9,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewData["Title"] - MusicStore</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/site.css" asp-append-version="true">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
 </head>
 <body>
@@ -26,9 +26,6 @@
               <ul class="navbar-nav me-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Home<span class="visually-hidden">(current)</span></a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Store" asp-action="Index">Store</a>
                 </li>
 
@@ -38,39 +35,36 @@
                         <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Cart">Cart</a>
                     </li>
                     @*@if (SignInManager.IsSignedIn(User))
-                {*@
+                    {*@
 
-                    <li class="nav-item">
+@*                    <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Albums" asp-action="Index">Albums</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
-                    </li>
+                    </li>*@
+@*                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="Orders">Orders</a>
+                    </li>*@
 
                     @*}*@
                 }
                 </ul>
                 <partial name="_LoginPartial" />
                
-        @*      <form class="d-flex">
-                <input class="form-control me-sm-2" type="search" placeholder="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit" fdprocessedid="yth06e">Search</button>
-              </form>*@
+
             </div>
           </div>
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-@*    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - MusicStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>*@
+    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

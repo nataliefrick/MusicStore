@@ -43,3 +43,13 @@ td.text-end {
 .width-auto {
     width: auto!important;
 }
+
+.cart-order {
+    width: 80px;
+    height: 80px;
+}
+
+.product-details {
+    width: 200px;
+    height: 200px;
+}
